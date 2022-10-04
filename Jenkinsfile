@@ -8,7 +8,14 @@ pipeline {
     stages {
         stage('Bringup') {
             steps {
-                echo 'Building..'
+                sh '''
+                terraform init
+                terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
+                terraform apply "current_plan.tfplan"
+                terraform output > output.txt
+                terraform apply -destroy -auto-approve
+                zrób z tego step w jenkinsie
+                '''
             }
         }
         stage('Test') {
