@@ -14,7 +14,6 @@ pipeline {
                 terraform apply "current_plan.tfplan"
                 terraform output > output.txt
                 terraform apply -destroy -auto-approve
-                zrób z tego step w jenkinsie
                 '''
             }
         }
