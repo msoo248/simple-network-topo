@@ -3,7 +3,9 @@
 ##################################################################################
 
 provider "aws" {
-  region     = var.aws_region
+  profile                 = "awsprofile"
+  region                  = var.aws_region
+  shared_credentials_file = "/home/ec2-user/.aws/credentials"
 }
 
 ##################################################################################
@@ -58,7 +60,7 @@ resource "aws_route_table_association" "rta-subnet1" {
 }
 
 # SECURITY GROUPS #
-# Nginx security group 
+# Nginx security group
 resource "aws_security_group" "nginx-sg" {
   name   = "nginx_sg"
   vpc_id = aws_vpc.vpc.id
