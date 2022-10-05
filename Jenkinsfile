@@ -11,7 +11,7 @@ pipeline {
                 sh '''#!/bin/bash
                 #cd terraform
                 #terraform init
-                3terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
+                #terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
                 #terraform apply "current_plan.tfplan"
                 #terraform output > output.txt
                 #cd ..
@@ -20,7 +20,7 @@ pipeline {
                   echo  "$host"
                 done > ansible/host-dev
                 cat ansible/host-dev
-                ansible-playbook -i host-dev Package.yml
+                ansible-playbook -i host-dev ansible/Package.yml
 
                 # terraform apply -destroy -auto-approve
                 '''
