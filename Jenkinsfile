@@ -9,6 +9,7 @@ pipeline {
         stage('Bringup') {
             steps {
                 sh '''
+                #!/bin/bash
                 cd terraform
                 terraform init
                 terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
@@ -17,7 +18,7 @@ pipeline {
                 cd ..
                 array=$(grep '"*"' terraform/output.txt | sed 's/[,"]//g')
                 for host in ${array[@]}; do
-                echo  "$host"
+                  echo  "$host"
                 done > ansible/host-dev
                 ansible-playbook -i host-dev Package.yml
 
