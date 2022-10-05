@@ -20,7 +20,8 @@ pipeline {
                   echo  "$host"
                 done > ansible/host-dev
                 cat ansible/host-dev
-                ansible-playbook -i host-dev ansible/Package.yml
+                cd ansible
+                ansible-playbook -i host-dev Package.yml
 
                 # terraform apply -destroy -auto-approve
                 '''
