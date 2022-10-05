@@ -3,7 +3,7 @@
 def repoURL = 'https://github.com/msoo248/simple-network-topo.git'
 
 pipeline {
-    agent any
+    agent {label 'ubuntu'}
 
     stages {
         stage('Bringup') {
@@ -13,7 +13,8 @@ pipeline {
                 terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
                 terraform apply "current_plan.tfplan"
                 terraform output > output.txt
-                terraform apply -destroy -auto-approve
+                
+                # terraform apply -destroy -auto-approve
                 '''
             }
         }

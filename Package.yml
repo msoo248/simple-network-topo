@@ -1,0 +1,16 @@
+- name: install redis on RHEL based distros
+  yum:
+    name: quagga
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+
+- name: install redis on Debian based distros 
+  apt:
+    name: quagga
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_os_family == 'Debian'
