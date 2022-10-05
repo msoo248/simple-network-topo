@@ -57,7 +57,7 @@ variable "machine_name" {
 
 variable "key_name" {
   type        = string
-  default = "jenkins"
+  default     = "ansible-key"
   description = ".ppk/.pem key name"
 }
 
