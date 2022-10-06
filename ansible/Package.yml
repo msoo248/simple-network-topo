@@ -2,7 +2,9 @@
   tasks:
     - name: install Quagga on Debian based distros
       apt:
-        name: quagga
+        name: 
+          - quagga
+          - quagga-doc
         state: present
         update_cache: true
       become: true
@@ -10,7 +12,9 @@
 
     - name: install Quagga on RHEL based distros
       yum:
-        name: quagga
+        name: 
+          - quagga
+          - quagga-doc
         state: present
         update_cache: true
       become: true
@@ -18,7 +22,7 @@
 
     - name: Create config file for zebra
       ansible.builtin.copy:
-        src: /usr/share/doc/quagga/examples/zebra.conf.sample
+        src: ~/quagga/examples/zebra.conf.sample
         dest: /etc/quagga/zebra.conf
 
     - name: Start Quagga
