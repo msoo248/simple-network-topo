@@ -24,6 +24,7 @@ pipeline {
                 ansible-playbook -i host-dev Package.yml
                 cd ../terraform
                 # terraform apply -destroy -auto-approve
+                echo "test"
                 '''
             }
         }
