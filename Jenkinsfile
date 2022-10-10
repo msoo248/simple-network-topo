@@ -22,7 +22,7 @@ pipeline {
                 cat ansible/host-dev
                 cd ansible
                 ansible-playbook -i host-dev Package.yml
-
+                cd ../terraform
                 # terraform apply -destroy -auto-approve
                 '''
             }
