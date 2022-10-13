@@ -20,7 +20,7 @@ pipeline {
                   echo  "$host"
                 done > ansible/host-dev
                 cat ansible/host-dev
-                cd ansible
+                # cd ansible
                 # ansible-playbook -i host-dev Package.yml
                 echo "Hello world"
 
