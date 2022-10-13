@@ -21,9 +21,10 @@ pipeline {
                 done > ansible/host-dev
                 cat ansible/host-dev
                 cd ansible
-                ansible-playbook -i host-dev Package.yml
+                # ansible-playbook -i host-dev Package.yml
+                echo "Hello"
 
-                # terraform apply -destroy -auto-approve
+                terraform apply -destroy -auto-approve
                 '''
             }
         }
