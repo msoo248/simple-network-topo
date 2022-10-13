@@ -9,12 +9,12 @@ pipeline {
         stage('Bringup') {
             steps {
                 sh '''#!/bin/bash
-                #cd terraform
-                #terraform init
-                #terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
-                #terraform apply "current_plan.tfplan"
-                #terraform output > output.txt
-                #cd ..
+                cd terraform
+                terraform init
+                terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
+                terraform apply "current_plan.tfplan"
+                terraform output > output.txt
+                cd ..
                 array=$(grep '"*"' terraform/output.txt | sed 's/[,"]//g')
                 for host in ${array[@]}; do
                   echo  "$host"
