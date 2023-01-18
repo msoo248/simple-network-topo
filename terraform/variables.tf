@@ -78,3 +78,15 @@ variable "name_prefix" {
   description = "Naming prefix for resources"
   default     = "MarSoft"
 }
+
+variable "aws_access_key"{
+  type = string
+  description = "Access key to AWS"
+  sensitive = true
+}
+
+variable "aws_secret_key"{
+  type = string
+  description = "Secret key to AWS"
+  sensitive = true
+}
