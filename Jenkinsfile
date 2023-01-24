@@ -25,7 +25,6 @@ pipeline {
                 echo "Hello world"
 
                 terraform apply -destroy -auto-approve
-                #testtest
                 '''
             }
         }
