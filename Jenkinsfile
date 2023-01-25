@@ -23,7 +23,7 @@ pipeline {
                 # cd ansible
                 # ansible-playbook -i host-dev Package.yml
                 echo "Hello world"
-
+                #teste
                 terraform apply -destroy -auto-approve
                 '''
             }
