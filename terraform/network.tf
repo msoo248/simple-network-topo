@@ -12,8 +12,9 @@ resource "aws_internet_gateway" "igw" {
   tags = local.common_tags
 }
 
-resource "aws_subnet" "subnet1" {
-  cidr_block              = var.vpc_subnet1_cidr_block
+resource "aws_subnet" "subnet" {
+  count                   = var.vpc_subnet_count
+  cidr_block              = var.vpc_subnet_cidr_block[count.index]
   vpc_id                  = aws_vpc.vpc.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
@@ -32,8 +33,8 @@ resource "aws_route_table" "rtb" {
   tags = local.common_tags
 }
 
-resource "aws_route_table_association" "rta-subnet1" {
-  subnet_id      = aws_subnet.subnet1.id
+resource "aws_route_table_association" "rta-subnet" {
+  subnet_id      = aws_subnet.subnet[*].id
   route_table_id = aws_route_table.rtb.id
 }
 

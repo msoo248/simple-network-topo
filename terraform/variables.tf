@@ -16,10 +16,10 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-variable "vpc_subnet1_cidr_block" {
-  type        = string
-  description = "CIDR Block for Subnet 1 in VPC"
-  default     = "10.0.0.0/24"
+variable "vpc_subnet_cidr_block" {
+  type        = list
+  description = "CIDR Block for Subnets in VPC"
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
 variable "map_public_ip_on_launch" {
@@ -64,7 +64,7 @@ variable "key_name" {
 variable "instance_count" {
   type        = number
   description = "Number of instances to create in VPC"
-  default     = 2
+  default     = 3
 }
 
 variable "vpc_subnet_count" {
