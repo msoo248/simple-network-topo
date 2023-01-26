@@ -64,7 +64,7 @@ variable "key_name" {
 variable "instance_count" {
   type        = number
   description = "Number of instances to create in VPC"
-  default     = 3
+  default     = 2
 }
 
 variable "vpc_subnet_count" {
@@ -80,13 +80,22 @@ variable "name_prefix" {
 }
 
 variable "aws_access_key"{
-  type = string
+  type        = string
   description = "Access key to AWS"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "aws_secret_key"{
-  type = string
+  type        = string
   description = "Secret key to AWS"
-  sensitive = true
+sensitive     = true
+}
+
+variable "output_map"{
+  type        = map(string)
+  default     = {
+    aws_instance.quagga[0].public_dns       = "Quagga0"
+    aws_instance.quagga[1].public_dns       = "Quagga1"
+    aws_instance.quagga1.public_dns         = "Quagga2"
+  }
 }

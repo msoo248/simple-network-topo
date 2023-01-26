@@ -32,7 +32,7 @@ resource "aws_instance" "quagga1" {
   key_name               = var.key_name
 
   tags = merge(local.common_tags, {
-    Name = "${local.name_prefix}-quagga-3"
+    Name = "${local.name_prefix}-quagga-2"
   })
 
 }

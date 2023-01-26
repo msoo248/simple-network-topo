@@ -34,7 +34,7 @@ resource "aws_route_table" "rtb" {
 }
 
 resource "aws_route_table_association" "rta-subnet" {
-  subnet_id      = aws_subnet.subnet[*].id
+  subnet_id      = aws_subnet.subnet[0].id
   route_table_id = aws_route_table.rtb.id
 }
 
