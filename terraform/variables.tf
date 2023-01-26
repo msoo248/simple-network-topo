@@ -94,8 +94,8 @@ sensitive     = true
 variable "output_map"{
   type        = map(string)
   default     = {
-    aws_instance.quagga[0].public_dns       = "Quagga0"
-    aws_instance.quagga[1].public_dns       = "Quagga1"
-    aws_instance.quagga1.public_dns         = "Quagga2"
+    "Quagga0"       = aws_instance.quagga[0].public_dns
+    "Quagga1"       = aws_instance.quagga[1].public_dns
+    "Quagga2"         = aws_instance.quagga1.public_dns
   }
 }
