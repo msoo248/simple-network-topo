@@ -9,7 +9,8 @@ pipeline {
                 sh '''#!/bin/bash -e
                 cd terraform
                 terraform init
-                terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
+                terraform validate
+                #terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
                 #terraform apply "current_plan.tfplan"
                 #terraform output > output.txt
                 #cat output.txt

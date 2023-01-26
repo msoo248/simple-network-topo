@@ -12,6 +12,8 @@ resource "aws_internet_gateway" "igw" {
   tags = local.common_tags
 }
 
+# SUBNET FOR ROUTING #
+
 resource "aws_subnet" "subnet" {
   count                   = var.vpc_subnet_count
   cidr_block              = var.vpc_subnet_cidr_block[count.index]
@@ -19,6 +21,25 @@ resource "aws_subnet" "subnet" {
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
   tags = local.common_tags
+}
+
+resource "aws_network_interface" "eni_2" {
+  subnet_id = aws_subnet.subnet[1].id
+}
+
+# SUBNET FOR PCS #
+
+resource "aws_subnet" "subnet_pc" {
+  count                   = var.vpc_subnet_count
+  cidr_block              = var.vpc_subnet_pc_cidr_block[count.index]
+  vpc_id                  = aws_vpc.vpc.id
+  map_public_ip_on_launch = var.map_public_ip_on_launch
+
+  tags = local.common_tags
+}
+
+resource "aws_network_interface" "eni_pc" {
+  subnet_id = aws_subnet.subnet_pc[*].id
 }
 
 # ROUTING #
