@@ -90,12 +90,3 @@ variable "aws_secret_key"{
   description = "Secret key to AWS"
 sensitive     = true
 }
-
-variable "output_map"{
-  type        = map(string)
-  default     = {
-    "Quagga0"       = aws_instance.quagga[0].public_dns
-    "Quagga1"       = aws_instance.quagga[1].public_dns
-    "Quagga2"         = aws_instance.quagga1.public_dns
-  }
-}
