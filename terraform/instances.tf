@@ -15,7 +15,8 @@ resource "aws_instance" "quagga" {
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.subnet[count.index].id
   network_interface {
-    network_interface_id = aws_network_interface.subnet_pc[count.index].id
+    network_interface_id = aws_network_interface.eni_pc[count.index].id
+    device_index         = count.index
   }
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
   key_name               = var.key_name
@@ -33,6 +34,7 @@ resource "aws_instance" "quagga1" {
   subnet_id              = aws_subnet.subnet[0].id
   network_interface {
     network_interface_id = aws_network_interface.eni_2.id
+    device_index         = 2
   }
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
   key_name               = var.key_name
