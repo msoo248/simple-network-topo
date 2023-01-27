@@ -13,6 +13,7 @@ resource "aws_instance" "quagga" {
   count                  = var.instance_count
   ami                    = nonsensitive(data.aws_ssm_parameter.ami.value)
   instance_type          = var.instance_type
+  vpc_zone_identifier    = [aws_subnet.subnet[count.index].id]
   subnet_id              = aws_subnet.subnet[count.index].id
   
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
@@ -28,6 +29,7 @@ resource "aws_instance" "quagga1" {
   # count                  = var.instance_count
   ami                    = nonsensitive(data.aws_ssm_parameter.ami.value)
   instance_type          = var.instance_type
+  vpc_zone_identifier    = [aws_subnet.subnet[0].id]
   subnet_id              = aws_subnet.subnet[0].id
   
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]

@@ -24,6 +24,7 @@ resource "aws_subnet" "subnet" {
 }
 
 resource "aws_network_interface" "eni_2" {
+  vpc_zone_identifier    = [aws_subnet.subnet[0].id]
   subnet_id = aws_subnet.subnet[1].id
 }
 
@@ -46,8 +47,9 @@ resource "aws_subnet" "subnet_pc" {
 }
 
 resource "aws_network_interface" "eni_pc" {
-  count = length(aws_subnet.subnet_pc)
-  subnet_id = aws_subnet.subnet_pc[count.index].id
+  count                  = length(aws_subnet.subnet_pc)
+  vpc_zone_identifier    = [aws_subnet.subnet[count.index].id]
+  subnet_id              = aws_subnet.subnet_pc[count.index].id
 }
 
 resource "aws_network_interface_attachment" "for_pcs" {
