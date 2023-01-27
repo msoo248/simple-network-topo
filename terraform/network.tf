@@ -17,6 +17,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_subnet" "subnet" {
   count                   = var.vpc_subnet_count
   cidr_block              = var.vpc_subnet_cidr_block[count.index]
+  availability_zone       = var.availability_zone
   vpc_id                  = aws_vpc.vpc.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
@@ -24,7 +25,7 @@ resource "aws_subnet" "subnet" {
 }
 
 resource "aws_network_interface" "eni_2" {
-  vpc_zone_identifier    = [aws_subnet.subnet[0].id]
+  # availability_zone      = var.availability_zone
   subnet_id = aws_subnet.subnet[1].id
 }
 
@@ -40,6 +41,7 @@ resource "aws_network_interface_attachment" "for_quagga2" {
 resource "aws_subnet" "subnet_pc" {
   count                   = var.vpc_subnet_count
   cidr_block              = var.vpc_subnet_pc_cidr_block[count.index]
+  availability_zone       = var.availability_zone
   vpc_id                  = aws_vpc.vpc.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
@@ -47,8 +49,8 @@ resource "aws_subnet" "subnet_pc" {
 }
 
 resource "aws_network_interface" "eni_pc" {
+  # availability_zone      = var.availability_zone
   count                  = length(aws_subnet.subnet_pc)
-  vpc_zone_identifier    = [aws_subnet.subnet[count.index].id]
   subnet_id              = aws_subnet.subnet_pc[count.index].id
 }
 

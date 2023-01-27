@@ -4,6 +4,12 @@ variable "aws_region" {
   default     = "eu-central-1"
 }
 
+variable "availability_zone" {
+  type        = string
+  default     = "eu-central-1a"
+  
+}
+
 variable "enable_dns_hostnames" {
   type        = bool
   description = "Enable DNS hostnames in VPC"
