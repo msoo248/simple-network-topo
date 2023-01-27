@@ -31,7 +31,7 @@ resource "aws_network_interface" "eni_2" {
 
 resource "aws_network_interface_attachment" "for_quagga2" {
     network_interface_id   = aws_network_interface.eni_2.id
-    device_index           = 2
+    device_index           = 1
     instance_id            = aws_instance.quagga1.id
 }
 
@@ -57,7 +57,7 @@ resource "aws_network_interface" "eni_pc" {
 resource "aws_network_interface_attachment" "for_pcs" {
   count                   = var.instance_count
   network_interface_id    = aws_network_interface.eni_pc[count.index].id
-  device_index            = count.index
+  device_index            = 1
   instance_id             = aws_instance.quagga[count.index].id
 }
 
