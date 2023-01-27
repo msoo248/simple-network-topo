@@ -1,17 +1,9 @@
 ##################################################################################
-# DATA
-##################################################################################
-
-data "aws_ssm_parameter" "ami" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
-}
-
-##################################################################################
 # INSTANCES 
 ##################################################################################
 resource "aws_instance" "quagga" {
   count                  = var.instance_count
-  ami                    = nonsensitive(data.aws_ssm_parameter.ami.value)
+  ami                    = "ami-076bdd070268f9b8d"
   instance_type          = var.instance_type
   availability_zone      = var.availability_zone
   subnet_id              = aws_subnet.subnet[count.index].id
@@ -27,7 +19,7 @@ resource "aws_instance" "quagga" {
 
 resource "aws_instance" "quagga1" {
   # count                  = var.instance_count
-  ami                    = nonsensitive(data.aws_ssm_parameter.ami.value)
+  ami                    = "ami-076bdd070268f9b8d"
   instance_type          = var.instance_type
   availability_zone      = var.availability_zone
   subnet_id              = aws_subnet.subnet[0].id
@@ -40,3 +32,16 @@ resource "aws_instance" "quagga1" {
   })
 
 }
+
+##################################################################################
+# TAGS
+##################################################################################
+
+resource "aws_tag" "green_tag" {
+  count      = length(var.instance_ids)
+  resource_id = var.instance_ids[count.index]
+  key         = "State"
+  value       = "BLUE"
+}
+
+

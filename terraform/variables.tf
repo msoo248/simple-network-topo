@@ -100,5 +100,10 @@ variable "aws_access_key"{
 variable "aws_secret_key"{
   type        = string
   description = "Secret key to AWS"
-sensitive     = true
+  sensitive     = true
+}
+
+variable "instance_ids" {
+  type        = list(string)
+  destcription = "List of the instance ids"  
 }
