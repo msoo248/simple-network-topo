@@ -27,6 +27,13 @@ resource "aws_network_interface" "eni_2" {
   subnet_id = aws_subnet.subnet[1].id
 }
 
+resource "aws_network_interface_attachment" "for_quagga2" {
+    network_interface_id   = aws_network_interface.eni_2.id
+    device_index           = 2
+    instance_id            = aws_instance.quagga1.id
+}
+
+
 # SUBNET FOR PCS #
 
 resource "aws_subnet" "subnet_pc" {
@@ -39,8 +46,17 @@ resource "aws_subnet" "subnet_pc" {
 }
 
 resource "aws_network_interface" "eni_pc" {
-  subnet_id = aws_subnet.subnet_pc[*].id
+  count = length(aws_subnet.subnet_pc)
+  subnet_id = aws_subnet.subnet_pc[count.index].id
 }
+
+resource "aws_network_interface_attachment" "for_pcs" {
+  count                   = var.instance_count
+  network_interface_id    = aws_network_interface.eni_pc[count.index].id
+  device_index            = count.index
+  instance_id             = aws_instance.quagga[count.index].id
+}
+
 
 # ROUTING #
 resource "aws_route_table" "rtb" {
