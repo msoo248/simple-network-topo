@@ -24,7 +24,7 @@ resource "aws_instance" "quagga1" {
   instance_type          = var.instance_type
   availability_zone      = var.availability_zone
   subnet_id              = aws_subnet.subnet[0].id
-  private_ip             = "10.0.1.2"
+  private_ip             = "10.0.1.20"
   
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
   key_name               = var.key_name

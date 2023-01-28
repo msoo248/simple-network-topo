@@ -26,8 +26,8 @@ resource "aws_subnet" "subnet" {
 
 resource "aws_network_interface" "eni_2" {
   # availability_zone      = var.availability_zone
+  private_ip             = "10.0.2.20"
   subnet_id              = aws_subnet.subnet[1].id
-  private_ip             = "10.0.2.2"
 }
 
 resource "aws_network_interface_attachment" "for_quagga2" {
@@ -52,8 +52,8 @@ resource "aws_subnet" "subnet_pc" {
 resource "aws_network_interface" "eni_pc" {
   # availability_zone      = var.availability_zone
   count                  = length(aws_subnet.subnet_pc)
-  subnet_id              = aws_subnet.subnet_pc[count.index].id
   private_ip              = var.ip_list_pc[count.index]
+  subnet_id              = aws_subnet.subnet_pc[count.index].id
 }
 
 resource "aws_network_interface_attachment" "for_pcs" {

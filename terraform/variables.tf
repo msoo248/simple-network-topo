@@ -105,10 +105,10 @@ variable "aws_secret_key"{
 
 variable "ip_list" {
   type        = list(string)
-  default = [ "10.0.1.1", "10.0.2.1" ]
+  default = [ "10.0.1.10", "10.0.2.10" ]
 }
 
 variable "ip_list_pc" {
   type        = list(string)
-  default = [ "10.0.3.1", "10.0.4.1" ]
+  default = [ "10.0.3.10", "10.0.4.10" ]
 }
