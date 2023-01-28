@@ -105,10 +105,16 @@ variable "aws_secret_key"{
 
 variable "ip_list" {
   type        = list(string)
+  description = "A list of ips for Quagga 0&1 to connect to quagga2"
   default = [ "10.0.1.10", "10.0.2.10" ]
 }
 
 variable "ip_list_pc" {
   type        = list(string)
   default = [ "10.0.3.10", "10.0.4.10" ]
+}
+
+variable "ip_list_for_pcs" {
+  type        = list(string)
+  default = [ "10.0.3.20", "10.0.4.20" ]
 }
