@@ -100,10 +100,15 @@ variable "aws_access_key"{
 variable "aws_secret_key"{
   type        = string
   description = "Secret key to AWS"
-  sensitive     = true
+  sensitive   = true
 }
 
-variable "instance_ids" {
+variable "ip_list" {
   type        = list(string)
-  destcription = "List of the instance ids"  
+  default = [ "10.0.1.1", "10.0.2.1" ]
+}
+
+variable "ip_list_pc" {
+  type        = list(string)
+  default = [ "10.0.3.1", "10.0.4.1" ]
 }

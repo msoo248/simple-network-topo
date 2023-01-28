@@ -7,6 +7,7 @@ resource "aws_instance" "quagga" {
   instance_type          = var.instance_type
   availability_zone      = var.availability_zone
   subnet_id              = aws_subnet.subnet[count.index].id
+  private_ip             = var.ip_list[count.index]
   
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
   key_name               = var.key_name
@@ -23,6 +24,7 @@ resource "aws_instance" "quagga1" {
   instance_type          = var.instance_type
   availability_zone      = var.availability_zone
   subnet_id              = aws_subnet.subnet[0].id
+  private_ip             = "10.0.1.2"
   
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
   key_name               = var.key_name
@@ -32,16 +34,3 @@ resource "aws_instance" "quagga1" {
   })
 
 }
-
-##################################################################################
-# TAGS
-##################################################################################
-
-resource "aws_tag" "green_tag" {
-  count      = length(var.instance_ids)
-  resource_id = var.instance_ids[count.index]
-  key         = "State"
-  value       = "BLUE"
-}
-
-

@@ -33,6 +33,7 @@ resource "aws_network_interface_attachment" "for_quagga2" {
     network_interface_id   = aws_network_interface.eni_2.id
     device_index           = 1
     instance_id            = aws_instance.quagga1.id
+    private_ip             = "10.0.2.2"
 }
 
 
@@ -59,6 +60,7 @@ resource "aws_network_interface_attachment" "for_pcs" {
   network_interface_id    = aws_network_interface.eni_pc[count.index].id
   device_index            = 1
   instance_id             = aws_instance.quagga[count.index].id
+  private_ip              = var.ip_list_pc[count.index]
 }
 
 
