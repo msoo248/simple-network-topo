@@ -26,14 +26,14 @@ resource "aws_subnet" "subnet" {
 
 resource "aws_network_interface" "eni_2" {
   # availability_zone      = var.availability_zone
-  subnet_id = aws_subnet.subnet[1].id
+  subnet_id              = aws_subnet.subnet[1].id
+  private_ip             = "10.0.2.2"
 }
 
 resource "aws_network_interface_attachment" "for_quagga2" {
-    network_interface_id   = aws_network_interface.eni_2.id
-    device_index           = 1
-    instance_id            = aws_instance.quagga1.id
-    private_ip             = "10.0.2.2"
+  network_interface_id   = aws_network_interface.eni_2.id
+  device_index           = 1
+  instance_id            = aws_instance.quagga1.id
 }
 
 
@@ -53,6 +53,7 @@ resource "aws_network_interface" "eni_pc" {
   # availability_zone      = var.availability_zone
   count                  = length(aws_subnet.subnet_pc)
   subnet_id              = aws_subnet.subnet_pc[count.index].id
+  private_ip              = var.ip_list_pc[count.index]
 }
 
 resource "aws_network_interface_attachment" "for_pcs" {
@@ -60,7 +61,6 @@ resource "aws_network_interface_attachment" "for_pcs" {
   network_interface_id    = aws_network_interface.eni_pc[count.index].id
   device_index            = 1
   instance_id             = aws_instance.quagga[count.index].id
-  private_ip              = var.ip_list_pc[count.index]
 }
 
 
