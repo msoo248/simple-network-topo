@@ -9,7 +9,7 @@ resource "aws_instance" "quagga" {
   subnet_id              = aws_subnet.subnet[count.index].id
   private_ip             = var.ip_list[count.index]
   
-  vpc_security_group_ids = [aws_security_group.nginx-sg.id]
+  vpc_security_group_ids = [aws_security_group.terraform-sg.id]
   key_name               = var.key_name
 
   tags = merge(local.common_tags, {
@@ -26,7 +26,7 @@ resource "aws_instance" "quagga2" {
   subnet_id              = aws_subnet.subnet[0].id
   private_ip             = "10.0.1.20"
   
-  vpc_security_group_ids = [aws_security_group.nginx-sg.id]
+  vpc_security_group_ids = [aws_security_group.terraform-sg.id]
   key_name               = var.key_name
 
   tags = merge(local.common_tags, {
@@ -43,7 +43,7 @@ resource "aws_instance" "PC" {
   subnet_id              = aws_subnet.subnet[count.index].id
   private_ip             = var.ip_list_for_pcs[count.index]
   
-  vpc_security_group_ids = [aws_security_group.nginx-sg.id]
+  vpc_security_group_ids = [aws_security_group.terraform-sg.id]
   key_name               = var.key_name
 
   tags = merge(local.common_tags, {

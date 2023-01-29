@@ -69,7 +69,7 @@ variable "machine_name" {
 
 variable "key_name" {
   type        = string
-  default     = "ansible-key"
+  default     = "ansible"
   description = ".ppk/.pem key name"
 }
 

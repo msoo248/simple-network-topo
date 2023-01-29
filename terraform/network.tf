@@ -83,7 +83,7 @@ resource "aws_route_table_association" "rta-subnet" {
 
 # SECURITY GROUPS #
 # Nginx security group 
-resource "aws_security_group" "nginx-sg" {
+resource "aws_security_group" "terraform-sg" {
   name   = "nginx_sg"
   vpc_id = aws_vpc.vpc.id
 
