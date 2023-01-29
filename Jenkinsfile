@@ -2,11 +2,10 @@
 
 pipeline {
     agent {label 'agent1'}
-
     stages {
         stage('Bringup') {
             steps {
-                sh '''#!/bin/bash -e
+                sh """#!/bin/bash -e
                 cd terraform
                 terraform init
                 terraform validate
@@ -16,22 +15,48 @@ pipeline {
                 #cat output.txt
                 #cd ..
                 #array=$(grep '"*"' terraform/output.txt | sed 's/[,"]//g')
-                #echo "[routers]" > ansible/host-dev
                 #for host in ${array[@]}; do
                 #  echo "$host"
                 #done > ansible/host-dev
                 #cat ansible/host-dev
                 # cd ansible
                 # ansible-playbook -i host-dev Package.yml
-              
-                #terraform apply -destroy -auto-approve
-                '''
+                """
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
             }
+        }
+        // stage('Deployment'){
+        //     when {
+        //         success 'Test'
+        //     }
+        //     steps {
+        //         dir('terraform') {
+        //             sh """#!/bin/bash -e
+        //             terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+        //             cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+        //             """
+        //         }
+        //     }
+        // }
+        // stage('Destroy'){
+        //     when {
+        //         failure 'Test'
+        //     }
+        //     steps {
+        //         dir('terraform') {
+        //             sh "terraform apply -destroy -auto-approve"
+        //         }
+        //     }
+        // }
+
+    }
+    post {
+        always {
+            cleanWS()
         }
     }
 }
