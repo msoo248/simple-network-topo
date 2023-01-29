@@ -16,6 +16,12 @@ resource "aws_instance" "quagga" {
     Name = "${local.name_prefix}-quagga-${count.index}"
   })
 
+  provisioner "remote-exec" {
+    inline = [
+      "sudo hostnamectl set-hostname ${var.quagga_instance_name}"
+    ]
+  }
+
 }
 
 resource "aws_instance" "quagga2" {
@@ -33,6 +39,12 @@ resource "aws_instance" "quagga2" {
     Name = "${local.name_prefix}-quagga-2"
   })
 
+  provisioner "remote-exec" {
+    inline = [
+      "sudo hostnamectl set-hostname ${var.quagga_instance_name}"
+    ]
+  }
+
 }
 
 resource "aws_instance" "PC" {
@@ -49,5 +61,11 @@ resource "aws_instance" "PC" {
   tags = merge(local.common_tags, {
     Name = "${local.name_prefix}-PC-${count.index}"
   })
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo hostnamectl set-hostname ${var.pc_instance_name}"
+    ]
+  }
 
 }

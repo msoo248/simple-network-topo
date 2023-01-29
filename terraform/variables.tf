@@ -118,3 +118,13 @@ variable "ip_list_for_pcs" {
   type        = list(string)
   default = [ "10.0.3.20", "10.0.4.20" ]
 }
+
+variable "quagga_instance_name" {
+  count = 3
+  default = "Quagga${count.index}"
+}
+
+variable "pc_instance_name" {
+  count = var.instance_count
+  default = "PC${count.index}"
+}
