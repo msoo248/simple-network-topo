@@ -120,11 +120,9 @@ variable "ip_list_for_pcs" {
 }
 
 variable "quagga_instance_name" {
-  count = 3
-  default = "Quagga${count.index}"
+  default = ["${element(split(":" , aws_instance.quagga.*.tags["Name"]), 1)}"]
 }
 
 variable "pc_instance_name" {
-  count = var.instance_count
-  default = "PC${count.index}"
+  default = ["${element(split(":" , aws_instance.PC.*.tags["Name"]), 1)}"]
 }
