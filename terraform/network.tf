@@ -80,7 +80,7 @@ resource "aws_route_table_association" "rta-subnet" {
   route_table_id = aws_route_table.rtb.id
 }
 
-resource "aws_route_table_association" "rta-subnet" {
+resource "aws_route_table_association" "rtb-subnet" {
   subnet_id      = aws_subnet.subnet[1].id
   route_table_id = aws_route_table.rtb.id
 }
@@ -90,7 +90,7 @@ resource "aws_route_table_association" "rta-pc-subnet" {
   route_table_id = aws_route_table.rtb.id
 }
 
-resource "aws_route_table_association" "rta-pc-subnet" {
+resource "aws_route_table_association" "rtb-pc-subnet" {
   subnet_id      = aws_subnet.subnet_pc[1].id
   route_table_id = aws_route_table.rtb.id
 }
