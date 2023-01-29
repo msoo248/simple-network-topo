@@ -1,6 +1,6 @@
 import ast
 
-with open("terraform\\output.txt", "r") as f:
+with open("terraform/output.txt", "r") as f:
     file_content = f.read()
     exec(file_content)
 
@@ -12,8 +12,6 @@ for dns in aws_pc_public_dns:
 
 for dns in aws_quagga_public_dns:
     quagga.append("ansible_host=" + dns)
-
-i = 0
 
 with open("ansible/host-dev", "w") as f:
     f.writelines("[pcs]\n")
