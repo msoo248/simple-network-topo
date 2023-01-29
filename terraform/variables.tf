@@ -118,3 +118,13 @@ variable "ip_list_for_pcs" {
   type        = list(string)
   default = [ "10.0.3.20", "10.0.4.20" ]
 }
+
+variable "quagga_hostname"{
+  type        = list(string)
+  default = [ "Quagga-0", "Quagga-1" ]
+}
+
+variable "pc_hostname"{
+  type        = list(string)
+  default = [ "PC-0", "PC-1" ]
+}

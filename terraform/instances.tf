@@ -18,7 +18,7 @@ resource "aws_instance" "quagga" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo hostnamectl set-hostname ${local.quagga_instance_names[count.index]}"
+      "sudo hostnamectl set-hostname ${local.quagga_hostname[count.index]}"
     ]
   }
 
@@ -64,7 +64,7 @@ resource "aws_instance" "PC" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo hostnamectl set-hostname ${local.pc_instance_names[count.index]}"
+      "sudo hostnamectl set-hostname ${var.pc_hostname[count.index]}"
     ]
   }
 
