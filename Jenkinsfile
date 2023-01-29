@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Bringup') {
             steps {
-                sh """#!/bin/bash -e
+                sh '''#!/bin/bash -e
                 cd terraform
                 terraform init
                 terraform validate
@@ -21,7 +21,7 @@ pipeline {
                 #cat ansible/host-dev
                 # cd ansible
                 # ansible-playbook -i host-dev Package.yml
-                """
+                '''
             }
         }
         stage('Test') {
