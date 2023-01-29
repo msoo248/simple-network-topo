@@ -4,6 +4,12 @@ variable "aws_region" {
   default     = "eu-central-1"
 }
 
+variable "availability_zone" {
+  type        = string
+  default     = "eu-central-1a"
+  
+}
+
 variable "enable_dns_hostnames" {
   type        = bool
   description = "Enable DNS hostnames in VPC"
@@ -16,10 +22,16 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-variable "vpc_subnet1_cidr_block" {
-  type        = string
-  description = "CIDR Block for Subnet 1 in VPC"
-  default     = "10.0.0.0/24"
+variable "vpc_subnet_cidr_block" {
+  type        = list
+  description = "CIDR Block for Subnets in VPC"
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
+}
+
+variable "vpc_subnet_pc_cidr_block" {
+  type        = list
+  description = "CIDR Block for Subnets in VPC"
+  default     = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
 variable "map_public_ip_on_launch" {
@@ -57,7 +69,7 @@ variable "machine_name" {
 
 variable "key_name" {
   type        = string
-  default     = "ansible-key"
+  default     = "ansible"
   description = ".ppk/.pem key name"
 }
 
@@ -80,13 +92,39 @@ variable "name_prefix" {
 }
 
 variable "aws_access_key"{
-  type = string
+  type        = string
   description = "Access key to AWS"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "aws_secret_key"{
-  type = string
+  type        = string
   description = "Secret key to AWS"
-  sensitive = true
+  sensitive   = true
+}
+
+variable "ip_list" {
+  type        = list(string)
+  description = "A list of ips for Quagga 0&1 to connect to quagga2"
+  default = [ "10.0.1.10", "10.0.2.10" ]
+}
+
+variable "ip_list_pc" {
+  type        = list(string)
+  default = [ "10.0.3.10", "10.0.4.10" ]
+}
+
+variable "ip_list_for_pcs" {
+  type        = list(string)
+  default = [ "10.0.3.20", "10.0.4.20" ]
+}
+
+variable "quagga_hostname"{
+  type        = list(string)
+  default = [ "Quagga0", "Quagga1" ]
+}
+
+variable "pc_hostname"{
+  type        = list(string)
+  default = [ "PC0", "PC1" ]
 }

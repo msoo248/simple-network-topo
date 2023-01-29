@@ -5,6 +5,5 @@ locals {
     billing_code = var.billing_code
     Name         = var.machine_name
   }
-  name_prefix    = "${var.name_prefix}-dev"
 }
 

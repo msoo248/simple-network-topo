@@ -1,2 +1,7 @@
-ec2-18-196-208-242.eu-central-1.compute.amazonaws.com
-ec2-18-195-50-195.eu-central-1.compute.amazonaws.com
+[pcs]
+pc0 ansible_host=ec2-3-72-88-183.eu-central-1.compute.amazonaws.com
+pc1 ansible_host=ec2-3-72-75-54.eu-central-1.compute.amazonaws.com
+[routers]
+pc0 ansible_host=ec2-3-70-221-22.eu-central-1.compute.amazonaws.com
+pc1 ansible_host=ec2-18-194-161-239.eu-central-1.compute.amazonaws.com
+pc2 ansible_host=ec2-3-66-230-152.eu-central-1.compute.amazonaws.com
