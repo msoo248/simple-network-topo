@@ -11,13 +11,13 @@
           remote: 10.0.1.20
           vip: 10.0.0.1
           netmask: 30
-       ip-10-0-2-10:
+      ip-10-0-2-10:
         - name: gre01
           local: 10.0.2.10
           remote: 10.0.2.20
           vip: 10.0.0.5
           netmask: 30
-       ip-10-0-1-20:
+      ip-10-0-1-20:
         - name: gre01
           local: 10.0.2.20
           remote: 10.0.2.10
