@@ -17,9 +17,14 @@ resource "aws_instance" "quagga" {
   })
 
   provisioner "remote-exec" {
-    inline = [
-      "sudo hostnamectl set-hostname ${local.quagga_hostname[count.index]}"
-    ]
+    connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("~/.ssh/${var.key_name}")
+    }
+    
+    inline = ["sudo hostnamectl set-hostname ${var.quagga_hostname[count.index]}"]
   }
 
 }
@@ -40,6 +45,12 @@ resource "aws_instance" "quagga2" {
   })
 
   provisioner "remote-exec" {
+    connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("~/.ssh/${var.key_name}")
+    }
     inline = [
       "sudo hostnamectl set-hostname Quagga-dev-quagga-2"
     ]
@@ -52,7 +63,7 @@ resource "aws_instance" "PC" {
   ami                    = "ami-076bdd070268f9b8d"
   instance_type          = var.instance_type
   availability_zone      = var.availability_zone
-  subnet_id              = aws_subnet.subnet[count.index].id
+  subnet_id              = aws_subnet.subnet_pc[count.index].id
   private_ip             = var.ip_list_for_pcs[count.index]
   
   vpc_security_group_ids = [aws_security_group.terraform-sg.id]
@@ -63,6 +74,12 @@ resource "aws_instance" "PC" {
   })
 
   provisioner "remote-exec" {
+    connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("~/.ssh/${var.key_name}")
+    }
     inline = [
       "sudo hostnamectl set-hostname ${var.pc_hostname[count.index]}"
     ]
