@@ -1,0 +1,9 @@
+# hosts-dev
+
+[pcs]
+pc0 ansible_host=ec2-35-157-246-193.eu-central-1.compute.amazonaws.com
+pc1 ansible_host=ec2-3-121-85-21.eu-central-1.compute.amazonaws.com
+[routers]
+quagga0 ansible_host=ec2-18-195-49-46.eu-central-1.compute.amazonaws.com
+quagga1 ansible_host=ec2-3-72-45-104.eu-central-1.compute.amazonaws.com
+quagga2 ansible_host=ec2-18-184-202-66.eu-central-1.compute.amazonaws.com

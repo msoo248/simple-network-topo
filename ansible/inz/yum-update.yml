@@ -1,0 +1,11 @@
+---
+- name: Install Quagga and Quagga-docs
+  hosts: routers
+  become: true
+  tasks:
+  - name: Install Quagga and Quagga-docs
+    yum:
+      name:
+        - quagga
+        - quagga-doc
+      state: present

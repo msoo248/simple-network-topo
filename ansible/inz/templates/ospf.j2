@@ -1,0 +1,7 @@
+router ospf
+   log-adjacency-changes
+{% for result in instance.results %}
+   network {{ result.ansible_facts.interfaces | ipaddr('network/prefix') }} area {{ ospf_area }}
+{% endfor %}
+   redistribute static
+   default-information originate

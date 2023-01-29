@@ -15,8 +15,8 @@ pipeline {
                 #cd ..
                 #python ./parser.py
                 #cat ansible/host-dev
-                # cd ansible
-                # ansible-playbook -i host-dev Package.yml
+                #cd ansible
+                #ansible-playbook -i host-dev inz/eng-project.yml
                 '''
             }
         }

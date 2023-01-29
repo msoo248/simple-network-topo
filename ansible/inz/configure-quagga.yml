@@ -1,0 +1,33 @@
+---
+
+- name: Configure Quagga daemons
+  hosts: routers
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Get IP addresses and networks
+      set_fact:
+        interfaces: "{{  '/'.join([ item.ipv4.address, item.ipv4.netmask ]) }}"
+      loop: "{{ ansible_facts | dict2items | selectattr('value.ipv4', 'defined') | map(attribute='value') | list }}"
+      register: ip_addresses_networks
+
+    - name: Configure zebra
+      template:
+        src: templates/zebra.j2
+        dest: /etc/quagga/zebra.conf
+
+    - name: Configure OSPF
+      template:
+        src: templates/ospf.j2
+        dest: /etc/quagga/ospfd.conf
+      vars:
+        instance: "{{ ip_addresses_networks }}"
+        ospf_area: "0.0.0.0"
+
+    - name: Restart Quagga daemons
+      service:
+        name: "{{ item }}"
+        state: restarted
+      with_items:
+        - zebra
+        - ospfd
