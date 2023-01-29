@@ -13,7 +13,7 @@ resource "aws_instance" "quagga" {
   key_name               = var.key_name
 
   tags = merge(local.common_tags, {
-    Name = "Quagga-${count.index}"
+    Name = "Quagga${count.index}"
   })
 
   provisioner "remote-exec" {
@@ -52,7 +52,7 @@ resource "aws_instance" "quagga2" {
     private_key = file("~/.ssh/${var.key_name}.pem")
     }
     inline = [
-      "sudo hostnamectl set-hostname Quagga-dev-quagga-2"
+      "sudo hostnamectl set-hostname Quagga2"
     ]
   }
 
@@ -70,7 +70,7 @@ resource "aws_instance" "PC" {
   key_name               = var.key_name
 
   tags = merge(local.common_tags, {
-    Name = "PC-${count.index}"
+    Name = "PC${count.index}"
   })
 
   provisioner "remote-exec" {

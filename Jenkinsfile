@@ -12,7 +12,8 @@ pipeline {
                 #terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
                 #terraform apply "current_plan.tfplan"
                 #terraform output > output.txt
-                #. ./parser.py
+                #cd ..
+                #python ./parser.py
                 #cat ansible/host-dev
                 # cd ansible
                 # ansible-playbook -i host-dev Package.yml
