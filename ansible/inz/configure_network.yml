@@ -11,13 +11,13 @@
           remote: 10.0.1.20
           vip: 10.0.0.1
           netmask: 30
-       ip-10-0-2-10:
+      ip-10-0-2-10:
         - name: gre01
           local: 10.0.2.10
           remote: 10.0.2.20
           vip: 10.0.0.5
           netmask: 30
-       ip-10-0-1-20:
+      ip-10-0-1-20:
         - name: gre01
           local: 10.0.2.20
           remote: 10.0.2.10
@@ -29,41 +29,40 @@
           vip: 10.0.0.6
           netmask: 30
   tasks:
+    - name: Gather MAC addresses
+      setup:
+        filter: ansible_eth[0-9]*
+      register: interfaces_info
 
-  - name: Gather MAC addresses
-    setup:
-      filter: ansible_eth[0-9]*
-    register: interfaces_info
+    - name: Display all facts
+      debug:
+        var: ansible_facts.default_ipv4.gateway
 
-  - name: Display all facts
-    debug:
-      var: ansible_facts.default_ipv4.gateway
+    - name: Create configuration file
+      template:
+        src: templates/netplan.j2
+        dest: /etc/netplan/50-cloud-init.yaml 
+        force: yes
+      vars:
+        interfaces: "{{ interfaces_info.ansible_facts|dict2items }}"
+        default_gateway: "{{ ansible_facts.default_ipv4.gateway }}"
+        machines: "{{ config | dict2items }}"
+        hostname: "{{ ansible_hostname }}"
 
-  - name: Create configuration file
-    template:
-      src: templates/netplan.j2
-      dest: /etc/netplan/50-cloud-init.yaml 
-      force: yes
-    vars:
-      interfaces: "{{ interfaces_info.ansible_facts|dict2items }}"
-      default_gateway: "{{ ansible_facts.default_ipv4.gateway }}"
-      machines: "{{ config | dict2items }}"
-      hostname: "{{ ansible_hostname }}"
+    # - name: Try netplan configuration
+    #   command: netplan try
+    #   async: 45
+    #   poll: 0
+    
+    - name: Apply netplan configuration
+      command: netplan apply
 
-  # - name: Try netplan configuration
-  #   command: netplan try
-  #   async: 45
-  #   poll: 0
-  
-  - name: Apply netplan configuration
-    command: netplan apply
+    - name: Enable eth interfaces
+      command: ip link set {{ item.value.device }} up
+      with_items: "{{ interfaces_info.ansible_facts|dict2items }}"
 
-  - name: Enable eth interfaces
-    command: ip link set {{ item.value.device }} up
-    with_items: "{{ interfaces_info.ansible_facts|dict2items }}"
-
-  - name: Enable IP forwarding
-    sysctl:
-      name: net.ipv4.ip_forward
-      value: 1
-      state: present
+    - name: Enable IP forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
