@@ -16,16 +16,16 @@ resource "aws_instance" "quagga" {
     Name = "Quagga-${count.index}"
   })
 
-  provisioner "remote-exec" {
-    connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/${var.key_name}")
-    }
+  # provisioner "remote-exec" {
+  #   connection {
+  #   type        = "ssh"
+  #   host        = self.public_ip
+  #   user        = "ec2-user"
+  #   private_key = file("~/.ssh/${var.key_name}")
+  #   }
     
-    inline = ["sudo hostnamectl set-hostname ${var.quagga_hostname[count.index]}"]
-  }
+  #   inline = ["sudo hostnamectl set-hostname ${var.quagga_hostname[count.index]}"]
+  # }
 
 }
 
@@ -44,17 +44,17 @@ resource "aws_instance" "quagga2" {
     Name = "Quagga-2"
   })
 
-  provisioner "remote-exec" {
-    connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/${var.key_name}")
-    }
-    inline = [
-      "sudo hostnamectl set-hostname Quagga-dev-quagga-2"
-    ]
-  }
+  # provisioner "remote-exec" {
+  #   connection {
+  #   type        = "ssh"
+  #   host        = self.public_ip
+  #   user        = "ec2-user"
+  #   private_key = file("~/.ssh/${var.key_name}")
+  #   }
+  #   inline = [
+  #     "sudo hostnamectl set-hostname Quagga-dev-quagga-2"
+  #   ]
+  # }
 
 }
 
@@ -73,16 +73,16 @@ resource "aws_instance" "PC" {
     Name = "PC-${count.index}"
   })
 
-  provisioner "remote-exec" {
-    connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/${var.key_name}")
-    }
-    inline = [
-      "sudo hostnamectl set-hostname ${var.pc_hostname[count.index]}"
-    ]
-  }
+  # provisioner "remote-exec" {
+  #   connection {
+  #   type        = "ssh"
+  #   host        = self.public_ip
+  #   user        = "ec2-user"
+  #   private_key = file("~/.ssh/${var.key_name}")
+  #   }
+  #   inline = [
+  #     "sudo hostnamectl set-hostname ${var.pc_hostname[count.index]}"
+  #   ]
+  # }
 
 }
