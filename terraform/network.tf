@@ -63,7 +63,6 @@ resource "aws_network_interface_attachment" "for_pcs" {
   instance_id             = aws_instance.quagga[count.index].id
 }
 
-
 # ROUTING #
 resource "aws_route_table" "rtb" {
   vpc_id = aws_vpc.vpc.id
@@ -77,7 +76,12 @@ resource "aws_route_table" "rtb" {
 }
 
 resource "aws_route_table_association" "rta-subnet" {
-  subnet_id      = aws_subnet.subnet[0].id
+  subnet_id      = aws_subnet.subnet[*].id
+  route_table_id = aws_route_table.rtb.id
+}
+
+resource "aws_route_table_association" "rta-pc-subnet" {
+  subnet_id      = aws_subnet.subnet_pc[*].id
   route_table_id = aws_route_table.rtb.id
 }
 
