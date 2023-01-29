@@ -21,4 +21,4 @@ with open("ansible/host-dev", "w") as f:
         f.writelines("pc"+ str(i) + " " + pc[i] + "\n")
     f.writelines("[routers]\n")
     for i in range(len(quagga)):
-        f.writelines("pc"+ str(i) + " " + quagga[i] + "\n")
+        f.writelines("quagga"+ str(i) + " " + quagga[i] + "\n")

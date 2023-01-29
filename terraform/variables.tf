@@ -121,10 +121,10 @@ variable "ip_list_for_pcs" {
 
 variable "quagga_hostname"{
   type        = list(string)
-  default = [ "Quagga-0", "Quagga-1" ]
+  default = [ "Quagga0", "Quagga1" ]
 }
 
 variable "pc_hostname"{
   type        = list(string)
-  default = [ "PC-0", "PC-1" ]
+  default = [ "PC0", "PC1" ]
 }
