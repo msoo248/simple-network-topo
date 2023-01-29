@@ -12,12 +12,7 @@ pipeline {
                 #terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
                 #terraform apply "current_plan.tfplan"
                 #terraform output > output.txt
-                #cat output.txt
-                #cd ..
-                #array=$(grep '"*"' terraform/output.txt | sed 's/[,"]//g')
-                #for host in ${array[@]}; do
-                #  echo "$host"
-                #done > ansible/host-dev
+                #. ./parser.py
                 #cat ansible/host-dev
                 # cd ansible
                 # ansible-playbook -i host-dev Package.yml
