@@ -17,6 +17,8 @@ def test_ping(ip):
     output = os.system('ping -c 1 ' + ip)
     assert output == 0, f'Ping to {ip} failed'
 
+
+
 def test_neighbor_exist():
     output = subprocess.run(['sudo', 'vtysh', '-c', 'show ip ospf neighbor'], capture_output = True, text = True)
     assert output.returncode == 0
