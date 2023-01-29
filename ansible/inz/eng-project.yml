@@ -1,0 +1,26 @@
+---
+  - name: gather_facts from machines
+    hosts: all
+    gather_facts: true
+    
+  - name: Run playbook for debianlike machines
+    import_playbook: apt-update.yml
+    when: "'{{ ansible_distribution }}' == 'Ubuntu'"
+
+  - name: Run playbook for debianlike machines
+    import_playbook: apt-install-services.yml
+    when: "'{{ ansible_distribution }}' == 'Ubuntu'"
+
+  - name: Run playbook for redhat machines
+    import_playbook: yum-update.yml
+    when: "'{{ ansible_distribution }}' == 'RedHat'"
+
+  - name: Run playbook for redhat machines
+    import_playbook: yum-install-services.yml
+    when: "'{{ ansible_distribution }}' == 'RedHat'"
+
+  - name: configure machnes network
+    import_playbook: configure_network.yml
+
+  - name: configure quagga
+    import_playbook: configure-quagga.yml

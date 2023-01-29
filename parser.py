@@ -14,6 +14,7 @@ for dns in aws_quagga_public_dns:
     quagga.append("ansible_host=" + dns)
 
 with open("ansible/host-dev", "w") as f:
+    f.writelines("# hosts-dev\n\n")
     f.writelines("[pcs]\n")
     for i in range(len(pc)):
         f.writelines("pc"+ str(i) + " " + pc[i] + "\n")

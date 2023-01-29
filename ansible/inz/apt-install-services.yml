@@ -1,0 +1,12 @@
+# apt-install-services.yml
+---
+- hosts: routers
+  become: true
+  tasks:
+  - name: Install Quagga and Quagga-docs
+    apt:
+      name:
+        - quagga
+        - quagga-doc
+      state: present
+  
