@@ -4,3 +4,6 @@ output "aws_quagga_public_dns" {
 output "aws_pc_public_dns" {
   value = aws_instance.PC[*].public_dns
 }
+output "quagga2_public_dns" {
+  value = aws_instance.quagga2.public_dns
+}

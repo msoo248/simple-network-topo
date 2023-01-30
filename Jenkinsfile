@@ -9,50 +9,60 @@ pipeline {
                 cd terraform
                 terraform init
                 terraform validate
-                #terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
-                #terraform apply "current_plan.tfplan"
-                #terraform output > output.txt
-                #cd ..
-                #python ./parser.py
-                #cat ansible/host-dev
-                #cd ansible
-                #ansible-playbook -i host-dev inz/eng-project.yml
+                terraform plan -var-file="terraform.tfvars" -out current_plan.tfplan
+                terraform apply "current_plan.tfplan"
+                terraform output > output.txt
+                cd ..
+                python ./parser.py
+                cat ansible/host-dev
+                cd ansible
+                ansible-playbook -i host-dev inz/eng-project.yml
                 '''
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                sh '''#!/bin/bash -e
+                cd ~/.ssh
+                read dns < quagga2_dns.txt
+                ssh -i "ansible.pem" -o "StrictHostKeyChecking=no" ubuntu@\${dns}
+                git clone https://github.com/msoo248/simple-network-topo.git
+                cd simple-network-topo
+                sudo apt install -y pip3
+                pip3 install pytest 
+                python3 test.py
+                exit
+                '''
             }
         }
-        // stage('Deployment'){
-        //     when {
-        //         success 'Test'
-        //     }
-        //     steps {
-        //         dir('terraform') {
-        //             sh """#!/bin/bash -e
-        //             terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
-        //             cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
-        //             """
-        //         }
-        //     }
-        // }
-        // stage('Destroy'){
-        //     when {
-        //         failure 'Test'
-        //     }
-        //     steps {
-        //         dir('terraform') {
-        //             sh "terraform apply -destroy -auto-approve"
-        //         }
-        //     }
-        // }
+        stage('Deployment'){
+            when {
+                success 'Test'
+            }
+            steps {
+                dir('terraform') {
+                    sh """#!/bin/bash -e
+                    terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+                    cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+                    """
+                }
+            }
+        }
+        stage('Destroy'){
+            when {
+                failure 'Test'
+            }
+            steps {
+                dir('terraform') {
+                    sh "terraform apply -destroy -auto-approve"
+                }
+            }
+        }
 
     }
-    // post {
-    //     always {
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        always {
+            cleanWs()
+        }
+    }
 }
