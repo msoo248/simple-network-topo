@@ -6,6 +6,7 @@ with open("terraform/output.txt", "r") as f:
 
 pc = []
 quagga = []
+quagga2 = "".join(quagga2_public_dns)
 
 for dns in aws_pc_public_dns:
     pc.append("ansible_host=" + dns)
@@ -21,3 +22,6 @@ with open("ansible/host-dev", "w") as f:
     f.writelines("[routers]\n")
     for i in range(len(quagga)):
         f.writelines("quagga"+ str(i) + " " + quagga[i] + "\n")
+
+with open("quagga2_dns.txt", "w") as f:
+    f.write(quagga2)
