@@ -35,11 +35,8 @@ pipeline {
                 '''
             }
         }
-        stage('Deployment'){
-            when {
-                success 'Test'
-            }
-            steps {
+        post{
+            success {
                 dir('terraform') {
                     sh """#!/bin/bash -e
                     terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
@@ -47,18 +44,12 @@ pipeline {
                     """
                 }
             }
-        }
-        stage('Destroy'){
-            when {
-                failure 'Test'
-            }
-            steps {
+            failure {
                 dir('terraform') {
                     sh "terraform apply -destroy -auto-approve"
                 }
             }
         }
-
     }
     post {
         always {
