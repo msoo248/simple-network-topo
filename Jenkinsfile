@@ -34,22 +34,23 @@ pipeline {
                 exit
                 '''
             }
-        }
-        post{
-            success {
-                dir('terraform') {
-                    sh """#!/bin/bash -e
-                    terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
-                    cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
-                    """
+            post{
+                success {
+                    dir('terraform') {
+                        sh """#!/bin/bash -e
+                        terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+                        cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+                        """
+                    }
+                }
+                failure {
+                    dir('terraform') {
+                        sh "terraform apply -destroy -auto-approve"
+                    }
                 }
             }
-            failure {
-                dir('terraform') {
-                    sh "terraform apply -destroy -auto-approve"
-                }
-            }
         }
+
     }
     post {
         always {
