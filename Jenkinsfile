@@ -30,7 +30,7 @@ pipeline {
                 cd simple-network-topo
                 sudo apt install -y pip3
                 pip3 install pytest 
-                python3 test.py
+                pytest test.py
                 exit
                 '''
             }
