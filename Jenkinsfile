@@ -23,8 +23,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''#!/bin/bash -e
-                cd ~/.ssh
                 read dns < quagga2_dns.txt
+                cd ~/.ssh
                 ssh -i "ansible.pem" -o "StrictHostKeyChecking=no" ubuntu@\${dns}
                 git clone https://github.com/msoo248/simple-network-topo.git
                 cd simple-network-topo
