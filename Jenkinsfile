@@ -14,7 +14,6 @@ pipeline {
                 terraform output > output.txt
                 cd ..
                 python ./parser.py
-                cat ansible/host-dev
                 cd ansible
                 ansible-playbook -i host-dev inz/eng-project.yml
                 '''
@@ -23,32 +22,30 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''#!/bin/bash -e
-                read dns < quagga2_dns.txt
+                DNS="$(cat quagga2_dns.txt)"
                 cd ~/.ssh
                 ssh -i "ansible.pem" -o "StrictHostKeyChecking=no" ubuntu@\${dns}
                 git clone https://github.com/msoo248/simple-network-topo.git
                 cd simple-network-topo
-                sudo apt install -y pip3
-                pip3 install pytest 
                 pytest test.py
                 exit
                 '''
             }
-            post{
-                success {
-                    dir('terraform') {
-                        sh """#!/bin/bash -e
-                        terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
-                        cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
-                        """
-                    }
-                }
-                failure {
-                    dir('terraform') {
-                        sh "terraform apply -destroy -auto-approve"
-                    }
-                }
-            }
+            // post{
+            //     success {
+            //         dir('terraform') {
+            //             sh """#!/bin/bash -e
+            //             terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+            //             cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+            //             """
+            //         }
+            //     }
+            //     failure {
+            //         dir('terraform') {
+            //             sh "terraform apply -destroy -auto-approve"
+            //         }
+            //     }
+            // }
         }
 
     }
