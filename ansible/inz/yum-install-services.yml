@@ -10,8 +10,8 @@
         - quagga-doc
         - python-pip3
       state: present
-  - name: Install pytest
-    pip:
-      name: pytest
-      state: present
-      executable: pip3
+  # - name: Install pytest
+  #   pip:
+  #     name: pytest
+  #     state: present
+  #     executable: pip3
