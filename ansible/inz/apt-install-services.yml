@@ -9,4 +9,13 @@
         - quagga
         - quagga-doc
       state: present
-  
+  - name: Install pip3
+    apt:
+      name:
+        - python-pip3
+      state: present
+  - name: Install pytest
+    pip:
+      name: pytest
+      state: present
+      executable: pip3
