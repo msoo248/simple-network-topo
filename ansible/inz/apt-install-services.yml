@@ -3,15 +3,11 @@
 - hosts: routers
   become: true
   tasks:
-  - name: Install Quagga and Quagga-docs
+  - name: Install Quagga, Quagga-docs and Pip3
     apt:
       name:
         - quagga
         - quagga-doc
-      state: present
-  - name: Install pip3
-    apt:
-      name:
         - python-pip3
       state: present
   - name: Install pytest
