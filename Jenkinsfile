@@ -3,6 +3,12 @@
 pipeline {
     agent {label 'agent1'}
     stages {
+        stage('Checkout') {
+            checkout([
+                $class: 'GitSCM', branches: [[name: 'master']],
+                userRemoteConfigs: [[url: 'https://github.com/msoo248/simple-network-topo.git']]
+            ])
+        }
         stage('Bringup') {
             steps {
                 sh '''#!/bin/bash -e
@@ -54,6 +60,11 @@ pipeline {
 
     }
     post {
+        aborted{
+            dir('terraform') {
+                sh "terraform apply -destroy -auto-approve"
+            }
+        }
         always {
             cleanWs()
             sh 'ls /home/ec2-user/jenkins/workspace'
