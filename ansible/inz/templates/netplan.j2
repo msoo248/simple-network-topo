@@ -28,6 +28,7 @@ network:
         - {{ m.vip }}/{{ m.netmask }}
       remote: {{ m.remote }}
       local: {{ m.local }}
+      mtu: 8977
       ttl: 255
 {% endfor %}
 {% endif %}

@@ -25,7 +25,7 @@ pipeline {
                 DNS="$(cat quagga2_dns.txt)"
                 cd ~/.ssh
                 ssh -i "ansible.pem" -o "StrictHostKeyChecking=no" ubuntu@$DNS
-                pip install pytest
+                rm -rf simple-network-topo
                 git clone https://github.com/msoo248/simple-network-topo.git
                 cd simple-network-topo
                 pytest test.py
