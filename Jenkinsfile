@@ -62,6 +62,11 @@ pipeline {
 
     }
     post {
+        failure {
+            dir('terraform') {
+                sh "terraform apply -destroy -auto-approve"
+            }
+        }
         aborted{
             dir('terraform') {
                 sh "terraform apply -destroy -auto-approve"

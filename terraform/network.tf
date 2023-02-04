@@ -98,7 +98,7 @@ resource "aws_route_table_association" "rtb-pc-subnet" {
 # SECURITY GROUPS #
 # Nginx security group 
 resource "aws_security_group" "terraform-sg" {
-  name   = "nginx_sg"
+  name   = "quagga-sg"
   vpc_id = aws_vpc.vpc.id
 
   # HTTP access from anywhere
