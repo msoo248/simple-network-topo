@@ -4,10 +4,12 @@ pipeline {
     agent {label 'agent1'}
     stages {
         stage('Checkout') {
-            checkout([
-                $class: 'GitSCM', branches: [[name: 'master']],
-                userRemoteConfigs: [[url: 'https://github.com/msoo248/simple-network-topo.git']]
-            ])
+            steps{
+                checkout([
+                    $class: 'GitSCM', branches: [[name: 'master']],
+                    userRemoteConfigs: [[url: 'https://github.com/msoo248/simple-network-topo.git']]
+                ])
+            }
         }
         stage('Bringup') {
             steps {
