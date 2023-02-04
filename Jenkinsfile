@@ -35,27 +35,28 @@ pipeline {
                 \"
                 '''
             }
-            // post{
-            //     success {
-            //         dir('terraform') {
-            //             sh """#!/bin/bash -e
-            //             terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
-            //             cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
-            //             """
-            //         }
-            //     }
-            //     failure {
-            //         dir('terraform') {
-            //             sh "terraform apply -destroy -auto-approve"
-            //         }
-            //     }
-            // }
+            post{
+                success {
+                    dir('terraform') {
+                        sh """#!/bin/bash -e
+                        terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+                        cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+                        """
+                    }
+                }
+                failure {
+                    dir('terraform') {
+                        sh "terraform apply -destroy -auto-approve"
+                    }
+                }
+            }
         }
 
     }
-    // post {
-    //     always {
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        always {
+            cleanWs()
+            sh 'ls /home/ec2-user/jenkins/workspace'
+        }
+    }
 }
