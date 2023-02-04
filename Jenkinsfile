@@ -29,6 +29,8 @@ pipeline {
                 git clone https://github.com/msoo248/simple-network-topo.git
                 cd simple-network-topo
                 pytest test.py
+                cd ..
+                rm -rf simple-network-topo
                 exit
                 '''
             }
