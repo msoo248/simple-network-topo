@@ -17,15 +17,11 @@ import subprocess
 def test_ping(ip):
     output = os.system('ping -c 1 ' + ip)
     assert output == 0, f'Ping to {ip} failed'
-    sys.exit(1)
-
-
 
 def test_neighbor_exist():
     output = subprocess.run(['sudo', 'vtysh', '-c', 'show ip ospf neighbor'], capture_output = True, text = True)
     assert output.returncode == 0
     assert 'No neighbors found' not in output.stdout
-    sys.exit(1)
 
 @pytest.mark.parametrize('neighbor_ip', [
     '10.0.4.10',
@@ -43,7 +39,6 @@ def test_correct_neighbor(neighbor_ip):
                 found = True
                 break
     assert found, f'Neighbor with address {neighbor_ip} does not exist'
-    sys.exit(1)
     
 @pytest.mark.parametrize('ospf_id', [
     '10.0.2.20'
@@ -52,4 +47,3 @@ def test_ospf(ospf_id):
     output = subprocess.run(['sudo', 'vtysh', '-c', 'show ip ospf'], capture_output = True, text = True)
     ospf_conf = output.stdout
     assert f"Router ID: {ospf_id}" in ospf_conf, f'OSPF with this ID does not exist'
-    sys.exit(1)
