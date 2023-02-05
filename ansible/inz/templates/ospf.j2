@@ -4,4 +4,6 @@ router ospf
    network {{ result.ansible_facts.interfaces | ipaddr('network/prefix') }} area {{ ospf_area }}
 {% endfor %}
    redistribute static
+   redistribute connected
+   redistribute kernel
    default-information originate

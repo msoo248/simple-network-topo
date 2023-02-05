@@ -19,8 +19,11 @@
     import_playbook: yum-install-services.yml
     when: "'{{ ansible_distribution }}' == 'RedHat'"
 
-  - name: configure machnes network
+  - name: configure machines network
     import_playbook: configure_network.yml
 
   - name: configure quagga
     import_playbook: configure-quagga.yml
+
+  - name: configure PCs network
+    import_playbook: configure_pc.yml

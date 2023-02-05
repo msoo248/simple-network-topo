@@ -1,0 +1,44 @@
+---
+- name: configure PCs network
+  hosts: pcs
+  gather_facts: true
+  become: true
+  vars:
+    config:
+      ip-10-0-3-20:
+        - name: eth0
+          address: 10.0.3.20/24
+          gateway: 10.0.3.10
+          
+      ip-10-0-4-20:
+        - name: eth0
+          address: 10.0.4.20/24
+          gateway: 10.0.4.10
+
+  tasks:
+    - name: Gather MAC addresses
+      setup:
+        filter: ansible_eth[0-9]*
+      register: interfaces_info
+
+    - name: Create configuration file
+      template:
+        src: templates/netplan_pc.j2
+        dest: /etc/netplan/50-cloud-init.yaml 
+        force: yes
+      vars:
+        interfaces: "{{ interfaces_info.ansible_facts|dict2items }}"
+        default_gateway: "{{ ansible_facts.default_ipv4.gateway }}"
+        pcs: "{{ config | dict2items }}"
+        hostname: "{{ ansible_hostname }}"
+
+    - name: Enable IP forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
+    
+    - name: Apply netplan configuration
+      command: netplan apply
+      async: 20
+      poll: 0

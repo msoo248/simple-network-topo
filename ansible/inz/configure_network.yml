@@ -34,10 +34,6 @@
         filter: ansible_eth[0-9]*
       register: interfaces_info
 
-    - name: Display all facts
-      debug:
-        var: ansible_facts.default_ipv4.gateway
-
     - name: Create configuration file
       template:
         src: templates/netplan.j2
@@ -48,11 +44,6 @@
         default_gateway: "{{ ansible_facts.default_ipv4.gateway }}"
         machines: "{{ config | dict2items }}"
         hostname: "{{ ansible_hostname }}"
-
-    # - name: Try netplan configuration
-    #   command: netplan try
-    #   async: 45
-    #   poll: 0
     
     - name: Apply netplan configuration
       command: netplan apply
