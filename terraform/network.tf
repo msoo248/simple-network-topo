@@ -55,7 +55,7 @@ resource "aws_network_interface" "eni_pc" {
   count                   = length(aws_subnet.subnet_pc)
   private_ips             = [ var.ip_list_pc[count.index] ]
   subnet_id               = aws_subnet.subnet_pc[count.index].id
-  securitysecurity_groups = [aws_security_group.terraform-sg.id]
+  security_groups = [aws_security_group.terraform-sg.id]
 }
 
 resource "aws_network_interface_attachment" "for_pcs" {
