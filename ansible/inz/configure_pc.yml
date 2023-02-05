@@ -6,14 +6,14 @@
   vars:
     config:
       ip-10-0-3-20:
-        - name: eth0
-          address: 10.0.3.20/24
-          gateway: 10.0.3.10
+        name: eth0
+        address: 10.0.3.20/24
+        gateway: 10.0.3.10
           
       ip-10-0-4-20:
-        - name: eth0
-          address: 10.0.4.20/24
-          gateway: 10.0.4.10
+        name: eth0
+        address: 10.0.4.20/24
+        gateway: 10.0.4.10
 
   tasks:
     - name: Gather MAC addresses
