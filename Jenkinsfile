@@ -23,7 +23,7 @@ pipeline {
                 cd ..
                 python ./parser.py
                 cd ansible
-                ansible-playbook -i host-dev inz/eng-project.yml
+                #ansible-playbook -i host-dev inz/eng-project.yml
                 '''
             }
         }
@@ -60,30 +60,30 @@ pipeline {
                     }
                     
                 }
-                // failure {
-                //     dir('terraform') {
-                //         sh "terraform apply -destroy -auto-approve"
-                //     }
-                // }
+                failure {
+                    dir('terraform') {
+                        sh "terraform apply -destroy -auto-approve"
+                    }
+                }
             }
         }
 
     }
-    // post {
-    //     failure {
-    //         dir('terraform') {
-    //             sh "terraform apply -destroy -auto-approve"
-    //         }
-    //         cleanWs()
-    //     }
-    //     aborted{
-    //         dir('terraform') {
-    //             sh "terraform apply -destroy -auto-approve"
-    //         }
-    //         cleanWs()
-    //     }
-    //     success {
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        failure {
+            dir('terraform') {
+                sh "terraform apply -destroy -auto-approve"
+            }
+            cleanWs()
+        }
+        aborted{
+            dir('terraform') {
+                sh "terraform apply -destroy -auto-approve"
+            }
+            cleanWs()
+        }
+        success {
+            cleanWs()
+        }
+    }
 }

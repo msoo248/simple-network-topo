@@ -28,7 +28,7 @@ resource "aws_network_interface" "eni_2" {
   # availability_zone      = var.availability_zone
   private_ips             = [ "10.0.2.20" ]
   subnet_id               = aws_subnet.subnet[1].id
-  security_groups         = aws_security_group.terraform-sg.id
+  security_groups         = [aws_security_group.terraform-sg.id]
 }
 
 resource "aws_network_interface_attachment" "for_quagga2" {
@@ -55,7 +55,7 @@ resource "aws_network_interface" "eni_pc" {
   count                   = length(aws_subnet.subnet_pc)
   private_ips             = [ var.ip_list_pc[count.index] ]
   subnet_id               = aws_subnet.subnet_pc[count.index].id
-  security_groups         = aws_security_group.terraform-sg.id
+  securitysecurity_groups = [aws_security_group.terraform-sg.id]
 }
 
 resource "aws_network_interface_attachment" "for_pcs" {
