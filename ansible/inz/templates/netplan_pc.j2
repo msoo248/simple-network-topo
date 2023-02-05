@@ -13,7 +13,7 @@ network:
 {% if pc.key == hostname %}
       addresses:
       - {{ pc.value.address }}
-     routes:
+      routes:
       - to: default
         via: {{ pc.value.gateway }}
 {% endif %}

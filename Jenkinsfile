@@ -45,37 +45,45 @@ pipeline {
             }
             post{
                 success {
-                    dir('terraform') {
-                        sh """#!/bin/bash -e
-                        terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
-                        cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
-                        """
+                    script{
+                        def userInput = input message: 'Do you want to deploy?', ok: 'Deploy'
+                        if (userInput == 'Deploy') {
+                            dir('terraform') {
+                                sh """#!/bin/bash -e
+                                echo "yes" | terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+                                cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+                                """
+                            }
+                        } else {
+                            echo 'Deployment cancelled.'
+                        }
                     }
+                    
                 }
-                failure {
-                    dir('terraform') {
-                        sh "terraform apply -destroy -auto-approve"
-                    }
-                }
+                // failure {
+                //     dir('terraform') {
+                //         sh "terraform apply -destroy -auto-approve"
+                //     }
+                // }
             }
         }
 
     }
-    post {
-        failure {
-            dir('terraform') {
-                sh "terraform apply -destroy -auto-approve"
-            }
-            cleanWs()
-        }
-        aborted{
-            dir('terraform') {
-                sh "terraform apply -destroy -auto-approve"
-            }
-            cleanWs()
-        }
-        success {
-            cleanWs()
-        }
-    }
+    // post {
+    //     failure {
+    //         dir('terraform') {
+    //             sh "terraform apply -destroy -auto-approve"
+    //         }
+    //         cleanWs()
+    //     }
+    //     aborted{
+    //         dir('terraform') {
+    //             sh "terraform apply -destroy -auto-approve"
+    //         }
+    //         cleanWs()
+    //     }
+    //     success {
+    //         cleanWs()
+    //     }
+    // }
 }

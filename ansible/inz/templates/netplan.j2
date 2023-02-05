@@ -11,6 +11,8 @@ network:
     {{ interface.value.device }}:
 {% if interface.value.device == 'eth0' %}
       gateway4: {{ default_gateway }}
+      nameservers:
+        addresses: [ "8.8.8.8", "8.8.4.4" ]
 {% endif %}
       dhcp4: true
       dhcp6: false
