@@ -25,11 +25,7 @@ pipeline {
                 cd ansible
                 ansible-playbook -i host-dev inz/eng-project.yml
                 '''
-            }
-        }
-        stage('Confirm Deploy') {
-            steps {
-                input message: 'Now, you sholud go to AWS EC2 instance, go to Networking->Change source/destination check->Stop and Save. It is a workaroud for terraform', ok: 'Done'
+                input message: 'Now, you sholud go to AWS EC2 instance, go to Networking->Change source/destination check->Stop and Save. It is a workaroud for terraform for EC2 to allow for network traffic transit', ok: 'Done'
             }
         }
         stage('Test') {
@@ -48,27 +44,15 @@ pipeline {
                 \"
                 '''
             }
-            post{
-                success {
-                    script{
-                        def userInput = input message: 'Do you want to deploy?', ok: 'Deploy'
-                        if (userInput == 'Deploy') {
-                            dir('terraform') {
-                                sh """#!/bin/bash -e
-                                echo "yes" | terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
-                                cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
-                                """
-                            }
-                        } else {
-                            echo 'Deployment cancelled.'
-                        }
-                    }
-                    
-                }
-                failure {
-                    dir('terraform') {
-                        sh "terraform apply -destroy -auto-approve"
-                    }
+        }
+        stage('Deploy'){
+            steps{
+                input message: 'Do you want to deploy?', ok: 'Deploy'
+                dir('terraform') {
+                    sh """#!/bin/bash -e
+                    echo "yes" | terraform destroy -state=/home/ec2-user/jenkins/workspace/green.tfstate
+                    cp terraform.tfstate /home/ec2-user/jenkins/workspace/green.tfstate
+                    """
                 }
             }
         }
