@@ -66,15 +66,16 @@ pipeline {
             dir('terraform') {
                 sh "terraform apply -destroy -auto-approve"
             }
+            cleanWs()
         }
         aborted{
             dir('terraform') {
                 sh "terraform apply -destroy -auto-approve"
             }
-        }
-        always {
             cleanWs()
-            sh 'ls /home/ec2-user/jenkins/workspace'
+        }
+        success {
+            cleanWs()
         }
     }
 }
