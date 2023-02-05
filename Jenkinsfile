@@ -27,6 +27,11 @@ pipeline {
                 '''
             }
         }
+        stage('Confirm Deploy') {
+            steps {
+                input message: 'Now, you sholud go to AWS EC2 instance, go to Networking->Change source/destination check->Stop and Save. It is a workaroud for terraform', ok: 'Done'
+            }
+        }
         stage('Test') {
             steps {
                 sh '''#!/bin/bash -e

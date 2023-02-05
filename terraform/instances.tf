@@ -16,10 +16,6 @@ resource "aws_instance" "quagga" {
     Name = "Quagga${count.index}"
   })
 
-  provisioner "local-exec" {
-    command = "aws ec2 modify-instance-attribute --no-source-dest-check --instance-id ${self.id}"
-  }
-
 }
 
 resource "aws_instance" "quagga2" {
@@ -37,10 +33,6 @@ resource "aws_instance" "quagga2" {
     Name = "Quagga2"
   })
 
-  provisioner "local-exec" {
-    command = "aws ec2 modify-instance-attribute --no-source-dest-check --instance-id ${self.id}"
-  }
-
 }
 
 resource "aws_instance" "PC" {
@@ -57,9 +49,5 @@ resource "aws_instance" "PC" {
   tags = merge(local.common_tags, {
     Name = "PC${count.index}"
   })
-
-  provisioner "local-exec" {
-    command = "aws ec2 modify-instance-attribute --no-source-dest-check --instance-id ${self.id}"
-  }
-
+  
 }
