@@ -24,6 +24,7 @@ pipeline {
                 python ./parser.py
                 cd ansible
                 ansible-playbook -i host-dev inz/eng-project.yml
+                #test
                 '''
                 input message: 'Now, you sholud go to AWS EC2 instance, go to Networking->Change source/destination check->Stop and Save. It is a workaroud for terraform for EC2 to allow for network traffic transit', ok: 'Done'
             }
